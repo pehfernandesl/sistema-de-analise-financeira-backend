@@ -1,0 +1,39 @@
+{
+  "name": "sistema-de-analise-financeira-backend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pehfernandesl/sistema-de-analise-financeira-backend.git"
+  },
+  "author": {
+    "name": "Pedro Henrique Fernandes",
+    "email": "pehfernandesl@gmail.com",
+    "url": "https://www.github.com/pehfernandesl"
+  },
+  "contributors": [
+    {
+      "name": "Faris Saleh",
+      "email": "faris.s.ahmad@gmail.com",
+      "url": "https://www.github.com/farissaleh"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/pehfernandesl/sistema-de-analise-financeira-backend/issues"
+  },
+  "homepage": "https://github.com/pehfernandesl/sistema-de-analise-financeira-backend#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^4.2.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
