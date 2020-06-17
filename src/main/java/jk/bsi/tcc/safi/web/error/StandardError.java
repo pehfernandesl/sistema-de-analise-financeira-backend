@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * TODO: Write Documentation.
+ * TODO: Write Documentation
  */
 @Data
 @Builder
