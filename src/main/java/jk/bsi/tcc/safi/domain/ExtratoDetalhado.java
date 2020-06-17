@@ -41,4 +41,6 @@ public class ExtratoDetalhado implements Serializable {
 
   @OneToOne(mappedBy = "extratoDetalhado")
   private InformacaoBancaria info;
+  
+  //sada
 }
