@@ -20,7 +20,6 @@
         <value>
           <package name="" withSubpackages="true" static="true" />
           <emptyLine />
-          <package name="" withSubpackages="true" static="false" />
           <emptyLine />
           <package name="" withSubpackages="true" static="false" />
         </value>
