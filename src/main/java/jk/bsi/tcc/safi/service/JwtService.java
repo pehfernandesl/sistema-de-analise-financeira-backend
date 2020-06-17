@@ -6,6 +6,8 @@ import static java.util.Date.from;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -31,10 +33,12 @@ public class JwtService implements TokenService {
   private static final String JWT_RESPONSE_HEADER = "Authorization";
   private static final String JWT_RESPONSE_HEADER_VALUE_PREFIX = "Bearer ";
 
-//  @Value("${jwt.secret:safi.default}")
+  private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+  //  @Value("${jwt.secret:safi.default}")
   private final String secret = "safi.default";
 
-//  @Value("${jwt.expiration.in.seconds:3600}")
+  //  @Value("${jwt.expiration.in.seconds:3600}")
   private final Integer expiration = 3600;
 
   @Override
@@ -57,7 +61,7 @@ public class JwtService implements TokenService {
 
   @Override
   public Claims extractAllClaims(String token) {
-    return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
   }
 
   @Override
@@ -73,10 +77,9 @@ public class JwtService implements TokenService {
 
   @Override
   public String createToken(Map<String, Object> claims, String subject) {
-    return Jwts.builder().setClaims(claims).setSubject(subject)
+    return Jwts.builder().signWith(secretKey).setClaims(claims).setSubject(subject)
       .setIssuedAt(from(Instant.now())).setExpiration(from(Instant.now().plusSeconds(expiration)))
-      .signWith(
-        SignatureAlgorithm.HS256, secret).compact();
+      .compact();
   }
 
   @Override

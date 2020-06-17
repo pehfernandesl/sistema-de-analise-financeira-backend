@@ -26,14 +26,14 @@ public class AuthenticationResource {
   private final AuthenticationManager authenticationManager;
 
   @PostMapping
-  public ResponseEntity<Void> generateToken(@Valid @RequestBody Credencial credencial,
-                                            final HttpServletResponse response) {
+  public ResponseEntity<String> generateToken(@Valid @RequestBody Credencial credencial,
+                                              final HttpServletResponse response) {
     authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(credencial.getEmail(),
         credencial.getSenha())
     );
-    response.addHeader(tokenService.getAuthorizationHeader(),
-      tokenService.generateTokenWithPrefixedValue(credencial.getEmail()));
-    return ResponseEntity.noContent().build();
+
+    final String token = tokenService.generateTokenWithPrefixedValue(credencial.getEmail());
+    return ResponseEntity.ok(token);
   }
 }
