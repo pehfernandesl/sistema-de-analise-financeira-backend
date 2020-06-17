@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class Usuario implements Serializable {
   @Column(name = "data_nascimento", nullable = false)
   private LocalDate dataNascimento;
 
+  @Email
   @NotBlank
   @Column(name = "email", nullable = false, length = 254, unique = true)
   private String email;
@@ -40,6 +42,4 @@ public class Usuario implements Serializable {
   @Column(name = "senha_hash", nullable = false, length = 500)
   private String senha;
 
-  @Column(name = "token", length = 500)
-  private String token;
 }
