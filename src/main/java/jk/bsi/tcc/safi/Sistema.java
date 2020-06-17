@@ -29,7 +29,7 @@ public class Sistema {
       usuario.setEmail("admin@safi.net");
       usuario.setSenha(passwordEncoder.encode("admin"));
       usuario.setDataNascimento(LocalDate.of(1998, Month.JUNE, 29));
-      usuario.setNome("Pedro Henrique");
+      usuario.setNome("Administrador");
 
       usuarioRepository.save(usuario);
     };

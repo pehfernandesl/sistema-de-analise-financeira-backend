@@ -1,6 +1,7 @@
 package jk.bsi.tcc.safi.service;
 
 import jk.bsi.tcc.safi.domain.Receita;
+import jk.bsi.tcc.safi.domain.Usuario;
 import jk.bsi.tcc.safi.repository.ReceitaRepository;
 import jk.bsi.tcc.safi.service.dto.ReceitaDto;
 import jk.bsi.tcc.safi.service.mapper.ReceitaMapper;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ReceitaService {
+  private final ActiveUserService activeUserService;
   private final ReceitaRepository receitaRepository;
   private final ReceitaMapper receitaMapper;
 
@@ -29,8 +31,10 @@ public class ReceitaService {
    * @return the persisted entity.
    */
   public ReceitaDto save(ReceitaDto receitaDto) {
-    log.debug("Request to save Receita: {}", receitaDto);
+    log.debug("({}) Request to save Receita: {}", activeUserService.getEmail(), receitaDto);
+    final Usuario usuario = activeUserService.getUsuario();
     Receita receita = receitaMapper.toEntity(receitaDto);
+    receita.setUsuario(usuario);
     receita = receitaRepository.save(receita);
     return receitaMapper.toDto(receita);
   }
@@ -39,6 +43,7 @@ public class ReceitaService {
    * TODO: Write Documentation
    */
   public Page<ReceitaDto> findAll(Pageable pageable) {
-    return receitaRepository.findAll(pageable).map(receitaMapper::toDto);
+    String email = activeUserService.getEmail();
+    return receitaRepository.findByUsuarioEmail(email, pageable).map(receitaMapper::toDto);
   }
 }

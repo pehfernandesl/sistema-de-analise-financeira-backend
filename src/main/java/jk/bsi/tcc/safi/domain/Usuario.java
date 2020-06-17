@@ -2,11 +2,15 @@ package jk.bsi.tcc.safi.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -42,4 +46,9 @@ public class Usuario implements Serializable {
   @Column(name = "senha_hash", nullable = false, length = 500)
   private String senha;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+  private Set<Receita> receitas = new HashSet<>();
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+  private Set<Despesa> despesas = new HashSet<>();
 }

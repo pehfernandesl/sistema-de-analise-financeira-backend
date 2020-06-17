@@ -1,6 +1,7 @@
 package jk.bsi.tcc.safi.service;
 
 import jk.bsi.tcc.safi.domain.Despesa;
+import jk.bsi.tcc.safi.domain.Usuario;
 import jk.bsi.tcc.safi.repository.DespesaRepository;
 import jk.bsi.tcc.safi.service.dto.DespesaDto;
 import jk.bsi.tcc.safi.service.mapper.DespesaMapper;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class DespesaService {
+  private final ActiveUserService activeUserService;
   private final DespesaRepository despesaRepository;
   private final DespesaMapper despesaMapper;
 
@@ -29,8 +31,10 @@ public class DespesaService {
    * @return the persisted entity.
    */
   public DespesaDto save(DespesaDto despesaDto) {
-    log.debug("Request to save Receita: {}", despesaDto);
+    log.debug("({}) Request to save Receita: {}", activeUserService.getEmail(), despesaDto);
+    final Usuario usuario = activeUserService.getUsuario();
     Despesa despesa = despesaMapper.toEntity(despesaDto);
+    despesa.setUsuario(usuario);
     despesa = despesaRepository.save(despesa);
     return despesaMapper.toDto(despesa);
   }
@@ -39,6 +43,7 @@ public class DespesaService {
    * TODO: Write Documentation
    */
   public Page<DespesaDto> findAll(Pageable pageable) {
-    return despesaRepository.findAll(pageable).map(despesaMapper::toDto);
+    String email = activeUserService.getEmail();
+    return despesaRepository.findByUsuarioEmail(email, pageable).map(despesaMapper::toDto);
   }
 }
