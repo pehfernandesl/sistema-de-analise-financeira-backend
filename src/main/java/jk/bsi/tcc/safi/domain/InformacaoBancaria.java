@@ -1,11 +1,13 @@
 package jk.bsi.tcc.safi.domain;
 
 import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,12 +30,9 @@ public class InformacaoBancaria {
   @CreationTimestamp
   private LocalDate dataInclusao;
 
-  /**
-   * TODO: Implement -> ExtratoDetalhado
-   */
-//  @OneToOne(cascade = CascadeType.ALL)
-//  @JoinColumn(name = "extrato_detalhado_id", referencedColumnName = "id")
-//  private ExtratoDetalhado extratoDetalhado;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "extrato_detalhado_id", referencedColumnName = "id")
+  private ExtratoDetalhado extratoDetalhado;
 
   @ManyToOne
   @JoinColumn(name = "usuario_id", nullable = false, insertable = false, updatable = false)
