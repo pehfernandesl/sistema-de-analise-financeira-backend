@@ -51,4 +51,7 @@ public class Usuario implements Serializable {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
   private Set<Despesa> despesas = new HashSet<>();
+
+  @OneToMany(mappedBy = "usuario")
+  private Set<InformacaoBancaria> informacoesBancarias = new HashSet<>();
 }
