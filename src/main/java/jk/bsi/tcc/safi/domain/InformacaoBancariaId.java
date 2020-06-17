@@ -1,7 +1,7 @@
 package jk.bsi.tcc.safi.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -16,7 +16,7 @@ import lombok.Data;
 public class InformacaoBancariaId implements Serializable {
   @Column(name = "mes_ano", nullable = false)
   @Temporal(TemporalType.DATE)
-  private LocalDate mesAno;
+  private Date mesAno;
 
   @Column(name = "tp_banco", nullable = false)
   private Long tpBanco;
