@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import jk.bsi.tcc.safi.domain.Credencial;
 import jk.bsi.tcc.safi.service.TokenService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.Serializable;
 
 /**
  * REST controller for managing {@link jk.bsi.tcc.safi.domain.Usuario}.
@@ -26,7 +30,7 @@ public class AuthenticationResource {
   private final AuthenticationManager authenticationManager;
 
   @PostMapping
-  public ResponseEntity<String> generateToken(@Valid @RequestBody Credencial credencial,
+  public ResponseEntity<TokenResponse> generateToken(@Valid @RequestBody Credencial credencial,
                                               final HttpServletResponse response) {
     authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(credencial.getEmail(),
@@ -34,6 +38,11 @@ public class AuthenticationResource {
     );
 
     final String token = tokenService.generateTokenWithPrefixedValue(credencial.getEmail());
-    return ResponseEntity.ok(token);
+    return ResponseEntity.ok(new TokenResponse(token));
+  }
+ @Data
+ @AllArgsConstructor
+  static class TokenResponse  implements Serializable {
+    private String token;
   }
 }
