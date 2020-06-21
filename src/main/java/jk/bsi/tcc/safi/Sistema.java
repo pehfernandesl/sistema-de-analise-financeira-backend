@@ -2,19 +2,15 @@ package jk.bsi.tcc.safi;
 
 import java.time.LocalDate;
 import java.time.Month;
-
+import jk.bsi.tcc.safi.domain.Usuario;
+import jk.bsi.tcc.safi.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import jk.bsi.tcc.safi.domain.Usuario;
-import jk.bsi.tcc.safi.repository.UsuarioRepository;
-
-@ComponentScan(basePackages = {"jk.bsi.tcc.safi.service.mapper"})
 @SpringBootApplication
 public class Sistema {
   public static void main(String[] args) {
