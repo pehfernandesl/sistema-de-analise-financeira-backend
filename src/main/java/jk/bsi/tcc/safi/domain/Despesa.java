@@ -2,6 +2,7 @@ package jk.bsi.tcc.safi.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,8 @@ public class Despesa implements Serializable {
   @Digits(integer = 10, fraction = 2)
   @Column(name = "valor", nullable = false)
   private BigDecimal valor;
+
+  private LocalDate dataLancamento;
 
   @ManyToOne
   @JoinColumn(name = "usuario_id")

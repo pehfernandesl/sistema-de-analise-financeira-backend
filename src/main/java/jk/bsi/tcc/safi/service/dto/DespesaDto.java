@@ -2,6 +2,7 @@ package jk.bsi.tcc.safi.service.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -22,4 +23,6 @@ public class DespesaDto implements Serializable {
   @DecimalMax(value = "0.0", inclusive = false)
   @Digits(integer = 10, fraction = 2)
   private BigDecimal valor;
+
+  private LocalDate dataLancamento;
 }
