@@ -50,12 +50,13 @@ public class AuthenticationResource {
     );
 
     final String token = tokenService.generateTokenWithPrefixedValue(credencial.getEmail());
-    return ResponseEntity.ok(new TokenResponse(token));
+    return ResponseEntity.ok(new TokenResponse(credencial.getEmail(), token));
   }
 
   @Data
   @RequiredArgsConstructor
   public static class TokenResponse implements Serializable {
+    private final String email;
     private final String token;
   }
 
