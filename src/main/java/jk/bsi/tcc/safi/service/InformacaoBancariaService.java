@@ -59,6 +59,7 @@ public class InformacaoBancariaService {
      * Setting extratoDetalhado...
      */
     informacaoBancaria.setExtratoDetalhado(extratoDetalhado);
+    informacaoBancaria.setArquivoExtrato(decoded);
 
     /**
      * Saving entity...
