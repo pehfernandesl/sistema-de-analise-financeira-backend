@@ -1,6 +1,7 @@
 package jk.bsi.tcc.safi.web.rest;
 
 import jk.bsi.tcc.safi.service.RelatorioService;
+import jk.bsi.tcc.safi.service.dto.RelatorioDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,8 @@ public class RelatorioResource {
   private final RelatorioService relatorioService;
 
   @GetMapping("/relatorios")
-  public ResponseEntity<Void> getRelatorio(@RequestParam(value = "mes", required = true) Long mes) {
-    return ResponseEntity.ok(null);
+  public ResponseEntity<RelatorioDto> getRelatorio(@RequestParam(value = "mes", required = true) Long mes) {
+    final RelatorioDto relatorioDto = relatorioService.preencherRelatorio(mes);
+    return ResponseEntity.ok(relatorioDto);
   }
 }
