@@ -1,6 +1,7 @@
 package jk.bsi.tcc.safi.domain;
 
 import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -28,7 +29,7 @@ public class InformacaoBancaria {
 
   @Column(name = "data_inclusao")
   @CreationTimestamp
-  private LocalDate dataInclusao;
+  private Date dataInclusao;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "extrato_detalhado_id", referencedColumnName = "id")

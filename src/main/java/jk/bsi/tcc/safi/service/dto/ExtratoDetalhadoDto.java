@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import lombok.Data;
 
 /**
@@ -19,7 +21,7 @@ public class ExtratoDetalhadoDto implements Serializable {
 
   private Double saldo;
 
-  private List<TransacaoDto> transacoes;
+  private Set<TransacaoDto> transacoes;
 
   @JsonIgnore
   private InformacaoBancariaDto info;
