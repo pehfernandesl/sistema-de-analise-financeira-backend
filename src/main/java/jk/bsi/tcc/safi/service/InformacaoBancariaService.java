@@ -9,6 +9,7 @@ import jk.bsi.tcc.safi.domain.InformacaoBancaria;
 import jk.bsi.tcc.safi.domain.InformacaoBancariaId;
 import jk.bsi.tcc.safi.domain.Usuario;
 import jk.bsi.tcc.safi.repository.InformacaoBancariaRepository;
+import jk.bsi.tcc.safi.repository.TransacaoRepository;
 import jk.bsi.tcc.safi.service.dto.ExtratoDetalhadoDto;
 import jk.bsi.tcc.safi.service.dto.InformacaoBancariaDto;
 import jk.bsi.tcc.safi.service.mapper.ExtratoDetalhadoMapper;
@@ -30,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InformacaoBancariaService {
   private final ActiveUserService activeUserService;
   private final InformacaoBancariaRepository informacaoBancariaRepository;
+  private final TransacaoRepository transacaoRepository;
   private final InformacaoBancariaMapper informacaoBancariaMapper;
   private final ExtratoDetalhadoMapper extratoDetalhadoMapper;
   private final OfxParser ofxParser;
@@ -65,6 +67,16 @@ public class InformacaoBancariaService {
      * Saving entity...
      */
     informacaoBancaria = informacaoBancariaRepository.save(informacaoBancaria);
+
+    final Long extratoDetalhadoId = informacaoBancaria.getExtratoDetalhado().getId();
+
+    extratoDetalhado.getTransacoes().forEach(transacao -> {
+      final ExtratoDetalhado ext = new ExtratoDetalhado();
+      ext.setId(extratoDetalhadoId);
+      transacao.setExtratoDetalhado(ext);
+      transacaoRepository.save(transacao);
+    });
+
     return informacaoBancariaMapper.toDto(informacaoBancaria);
   }
 

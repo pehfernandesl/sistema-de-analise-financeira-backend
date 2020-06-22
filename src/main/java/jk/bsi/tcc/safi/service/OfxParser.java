@@ -277,6 +277,10 @@ public class OfxParser {
         dto.setValor(tXml.getValor());
         dto.setData(CoreUtil.dateFromXmlString(tXml.getData()));
         dto.setTipo(TpTransacao.retornaTipoTransacao(tXml.getDescOperacao()));
+        /**
+         * Quando executado, causa erro.
+         */
+//        dto.setExtratoDetalhado(extratoDto);
         listaDTO.add(dto);
       }
       extratoDto.setTransacoes(listaDTO);

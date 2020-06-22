@@ -36,11 +36,11 @@ public class ExtratoDetalhado implements Serializable {
   @Column(name = "saldo", nullable = false)
   private Double saldo;
 
-  @OneToMany(mappedBy = "extratoDetalhado", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "extratoDetalhado", fetch = FetchType.EAGER)
   private Set<Transacao> transacoes;
 
   @OneToOne(mappedBy = "extratoDetalhado")
   private InformacaoBancaria info;
-  
+
   //sada
 }
