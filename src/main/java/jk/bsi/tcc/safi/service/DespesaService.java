@@ -46,4 +46,11 @@ public class DespesaService {
     String email = activeUserService.getEmail();
     return despesaRepository.findByUsuarioEmail(email, pageable).map(despesaMapper::toDto);
   }
+
+  /**
+   * TODO: Write Documentation
+   */
+  public void delete(Long id) {
+    despesaRepository.deleteById(id);
+  }
 }

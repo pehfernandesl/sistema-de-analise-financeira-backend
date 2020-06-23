@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 import jk.bsi.tcc.safi.domain.*;
 import jk.bsi.tcc.safi.domain.xml.ExtratoXML;
 import jk.bsi.tcc.safi.repository.InformacaoBancariaRepository;
+import jk.bsi.tcc.safi.repository.TransacaoRepository;
 import jk.bsi.tcc.safi.service.dto.ExtratoDetalhadoDto;
 import jk.bsi.tcc.safi.service.dto.InformacaoBancariaDto;
 import jk.bsi.tcc.safi.service.dto.TransacaoDto;
@@ -30,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InformacaoBancariaService {
   private final ActiveUserService activeUserService;
   private final InformacaoBancariaRepository informacaoBancariaRepository;
+  private final TransacaoRepository transacaoRepository;
   private final InformacaoBancariaMapper informacaoBancariaMapper;
   private final ExtratoDetalhadoMapper extratoDetalhadoMapper;
   private final OfxParser ofxParser;
@@ -61,11 +63,22 @@ public class InformacaoBancariaService {
      */
     informacaoBancaria.setArquivoExtrato(decoded);
     informacaoBancaria.setExtratoDetalhado(extratoDetalhado);
+    informacaoBancaria.setArquivoExtrato(decoded);
 
     /**
      * Saving entity...
      */
     informacaoBancaria = informacaoBancariaRepository.save(informacaoBancaria);
+
+    final Long extratoDetalhadoId = informacaoBancaria.getExtratoDetalhado().getId();
+
+    extratoDetalhado.getTransacoes().forEach(transacao -> {
+      final ExtratoDetalhado ext = new ExtratoDetalhado();
+      ext.setId(extratoDetalhadoId);
+      transacao.setExtratoDetalhado(ext);
+      transacaoRepository.save(transacao);
+    });
+
     return informacaoBancariaMapper.toDto(informacaoBancaria);
   }
 

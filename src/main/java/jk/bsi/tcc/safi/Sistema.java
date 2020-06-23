@@ -17,7 +17,7 @@ public class Sistema {
     SpringApplication.run(Sistema.class, args);
   }
 
-  @Profile("test")
+  @Profile({"test", "dev"})
   @Bean
   CommandLineRunner commandLineRunner(UsuarioRepository usuarioRepository,
                                       PasswordEncoder passwordEncoder) {
