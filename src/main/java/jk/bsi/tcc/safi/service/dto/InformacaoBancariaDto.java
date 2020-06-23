@@ -2,6 +2,8 @@ package jk.bsi.tcc.safi.service.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -15,7 +17,7 @@ public class InformacaoBancariaDto implements Serializable {
 
   private String arquivoBase64;
 
-  private LocalDate dataInclusao;
+  private Date dataInclusao;
 
   private ExtratoDetalhadoDto extratoDetalhado;
 

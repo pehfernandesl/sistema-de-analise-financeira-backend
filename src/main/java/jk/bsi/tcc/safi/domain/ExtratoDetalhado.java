@@ -2,6 +2,7 @@ package jk.bsi.tcc.safi.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,10 +29,10 @@ public class ExtratoDetalhado implements Serializable {
   private Long id;
 
   @Column(name = "data_inicial", nullable = false)
-  private LocalDate dataInicial;
+  private Date dataInicial;
 
   @Column(name = "data_final", nullable = false)
-  private LocalDate dataFinal;
+  private Date dataFinal;
 
   @Column(name = "saldo", nullable = false)
   private Double saldo;

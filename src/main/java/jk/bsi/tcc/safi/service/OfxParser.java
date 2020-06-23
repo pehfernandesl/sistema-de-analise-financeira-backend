@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -51,7 +53,7 @@ public class OfxParser {
   public static ExtratoXML converterExtratoOFXtoExtratoXML(byte[] arrayBytes)
     throws IOException, JAXBException {
     String aux =
-      "C:\\Users\\pedro\\Projects\\sistema-de-analise-financeira-backend\\resources\\tmp";
+      "C:\\Users\\faris\\DEV\\Workspaces\\java\\spring\\safi\\sistema-de-analise-financeira-backend\\resources\\tmp";
     ExtratoXML extratoXML = null;
     File temp = null;
     File xml = null;
@@ -271,12 +273,13 @@ public class OfxParser {
     extratoDto.setSaldo(extratoXml.getSaldo());
 
     if (CoreUtil.isNotEmpty(extratoXml.getTransactions())) {
-      List<TransacaoDto> listaDTO = new ArrayList<TransacaoDto>();
+      Set<TransacaoDto> listaDTO = new HashSet<TransacaoDto>();
       for (TransactionXML tXml : extratoXml.getTransactions()) {
         TransacaoDto dto = new TransacaoDto();
         dto.setValor(tXml.getValor());
         dto.setData(CoreUtil.dateFromXmlString(tXml.getData()));
         dto.setTipo(TpTransacao.retornaTipoTransacao(tXml.getDescOperacao()));
+        dto.setExtratoDetalhado(extratoDto);
         /**
          * Quando executado, causa erro.
          */
