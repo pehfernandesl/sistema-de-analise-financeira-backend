@@ -13,7 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +36,7 @@ public class DespesaResource {
    * TODO: Write Documentation
    */
   @PostMapping("/despesas")
-  public ResponseEntity<DespesaDto> createReceita(@Valid @RequestBody DespesaDto despesaDto) throws
+  public ResponseEntity<DespesaDto> createDespesa(@Valid @RequestBody DespesaDto despesaDto) throws
     URISyntaxException {
     log.debug("REST request to save Despesa : {}", despesaDto);
     despesaDto = despesaService.save(despesaDto);
@@ -45,7 +47,7 @@ public class DespesaResource {
    * TODO: Write Documentation
    */
   @GetMapping("/despesas")
-  public ResponseEntity<List<DespesaDto>> getReceitas(Pageable pageable) {
+  public ResponseEntity<List<DespesaDto>> getDespesas(Pageable pageable) {
     log.debug("REST request to get a page of Despesas");
     final Page<DespesaDto> page = despesaService.findAll(pageable);
 
@@ -53,5 +55,15 @@ public class DespesaResource {
       .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequestUri(), page);
 
     return ResponseEntity.ok().headers(headers).body(page.getContent());
+  }
+
+  /**
+   * TODO: Write Documentation
+   */
+  @DeleteMapping("/despesas/{id}")
+  public ResponseEntity<Void> deleteDespesa(@PathVariable(name = "id") Long id) {
+    log.debug("REST request to delete a Despesa");
+    despesaService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }

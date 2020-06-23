@@ -46,4 +46,11 @@ public class ReceitaService {
     String email = activeUserService.getEmail();
     return receitaRepository.findByUsuarioEmail(email, pageable).map(receitaMapper::toDto);
   }
+
+  /**
+   * TODO: Write Documentation
+   */
+  public void delete(Long id) {
+    receitaRepository.deleteById(id);
+  }
 }
