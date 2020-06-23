@@ -2,6 +2,7 @@ package jk.bsi.tcc.safi.service.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,6 +19,7 @@ public class FormularioCadastroUsuarioDto implements Serializable {
 
   private LocalDate dataNascimento;
 
+  @Email
   @Size(min = 3, max = 254)
   @NotBlank
   private String email;

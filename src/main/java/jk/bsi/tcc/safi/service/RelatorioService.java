@@ -3,13 +3,11 @@ package jk.bsi.tcc.safi.service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-
 import jk.bsi.tcc.safi.domain.InformacaoBancaria;
 import jk.bsi.tcc.safi.repository.InformacaoBancariaRepository;
 import jk.bsi.tcc.safi.service.dto.RelatorioDto;
@@ -32,7 +30,10 @@ public class RelatorioService {
   private final ActiveUserService activeUserService;
 
   public RelatorioDto preencherRelatorio(LocalDate mes) throws RuntimeException {
-    List<InformacaoBancaria> listaInfo = informacaoBancariaRepository.findById_MesAno(Date.from(mes.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    List<InformacaoBancaria> listaInfo = informacaoBancariaRepository
+      .findById_MesAnoAndUsuarioEmail(
+        Date.from(mes.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+        activeUserService.getEmail());
 
     final List<Long> ids = new ArrayList<>();
     listaInfo.forEach((info) -> {
@@ -86,11 +87,14 @@ class RelatorioRepository {
     if (obj[3] != null) {
       relatorio.setDataMaisMovimento(CoreUtil.retornarDataFormatada(obj[3].toString()));
     }
-    if (obj[4] != null) {
-      relatorio.setDataMaisMovimentoPositivo(CoreUtil.retornarDataFormatada(obj[4].toString()));
-    }
+    /**
+     * Checkpoint: Original (Com erro) -> 4 , 5 | Novo (sem erro?) -> 5, 4
+     */
     if (obj[5] != null) {
-      relatorio.setDataMaisMovimentoNegativo(CoreUtil.retornarDataFormatada(obj[5].toString()));
+      relatorio.setDataMaisMovimentoPositivo(CoreUtil.retornarDataFormatada(obj[5].toString()));
+    }
+    if (obj[4] != null) {
+      relatorio.setDataMaisMovimentoNegativo(CoreUtil.retornarDataFormatada(obj[4].toString()));
     }
 
     return relatorio;

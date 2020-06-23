@@ -12,7 +12,7 @@ public enum TpTransacao {
   TARIFA(6L, "TARIFA"),
   REMUNERACAO(7L, "REMUNERAÇÃO"),
   OUTROS(8L, "OUTROS"),
-  DEPOSITOS(8L, "DEPOSITOS");
+  DEPOSITOS(9L, "DEPOSITOS");
 
 
   private TpTransacao(Long id, String descricao) {

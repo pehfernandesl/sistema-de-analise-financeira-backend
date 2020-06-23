@@ -19,5 +19,5 @@ public interface InformacaoBancariaRepository
   extends JpaRepository<InformacaoBancaria, InformacaoBancariaId> {
   Page<InformacaoBancaria> findByUsuarioEmail(String email, Pageable pageable);
 
-  List<InformacaoBancaria> findById_MesAno(Date mesAno);
+  List<InformacaoBancaria> findById_MesAnoAndUsuarioEmail(Date mesAno, String email);
 }
