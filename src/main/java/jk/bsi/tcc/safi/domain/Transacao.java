@@ -18,6 +18,7 @@ import lombok.*;
 /**
  * Transacao entity.
  */
+@EqualsAndHashCode
 @Entity
 @Table(name = "transacao")
 public class Transacao implements Serializable {
@@ -81,17 +82,5 @@ public class Transacao implements Serializable {
     this.extratoDetalhado = extratoDetalhado;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Transacao transacao = (Transacao) o;
-    return Objects.equals(id, transacao.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
-  }
 }
 

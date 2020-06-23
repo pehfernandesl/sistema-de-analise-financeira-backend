@@ -18,7 +18,6 @@ public class UsuarioDto implements Serializable {
   @NotBlank
   private String nome;
 
-  @NotNull
   private LocalDate dataNascimento;
 
   @Size(min = 3, max = 254)

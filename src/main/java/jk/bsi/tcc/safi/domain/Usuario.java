@@ -33,8 +33,7 @@ public class Usuario implements Serializable {
   @Column(name = "nome", nullable = false, length = 180)
   private String nome;
 
-  @NotNull
-  @Column(name = "data_nascimento", nullable = false)
+  @Column(name = "data_nascimento")
   private LocalDate dataNascimento;
 
   @Email
