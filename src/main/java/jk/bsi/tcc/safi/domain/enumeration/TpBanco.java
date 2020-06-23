@@ -1,7 +1,8 @@
 package jk.bsi.tcc.safi.domain.enumeration;
 
 public enum TpBanco {
-  SANTANDER(33L, "SANTANDER");
+  SANTANDER(33L, "SANTANDER"),
+  CAIXA(104l,"CAIXA");
 
   private TpBanco(Long id, String descricao) {
     this.id = id;
