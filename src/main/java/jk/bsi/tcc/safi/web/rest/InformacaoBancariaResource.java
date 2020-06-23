@@ -48,11 +48,7 @@ public class InformacaoBancariaResource {
   @GetMapping("/informacoes-bancarias")
   public ResponseEntity<List<InformacaoBancariaDto>> getInformacoesBancarias(Pageable pageable) {
     log.debug("REST request to get a page of InformacaoBancaria");
-    final Page<InformacaoBancariaDto> page = informacaoBancariaService.findAll(pageable);
-
-    HttpHeaders headers = PaginationUtil
-      .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequestUri(), page);
-
-    return ResponseEntity.ok().headers(headers).body(page.getContent());
+    final List<InformacaoBancariaDto> list = informacaoBancariaService.findAll(pageable);
+    return ResponseEntity.ok().body(list);
   }
 }

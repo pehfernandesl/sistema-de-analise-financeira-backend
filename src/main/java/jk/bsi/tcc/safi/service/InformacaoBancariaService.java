@@ -1,6 +1,7 @@
 package jk.bsi.tcc.safi.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import javax.xml.bind.JAXBException;
 
@@ -10,6 +11,7 @@ import jk.bsi.tcc.safi.repository.InformacaoBancariaRepository;
 import jk.bsi.tcc.safi.repository.TransacaoRepository;
 import jk.bsi.tcc.safi.service.dto.ExtratoDetalhadoDto;
 import jk.bsi.tcc.safi.service.dto.InformacaoBancariaDto;
+import jk.bsi.tcc.safi.service.dto.InformacaoBancariaIdDto;
 import jk.bsi.tcc.safi.service.dto.TransacaoDto;
 import jk.bsi.tcc.safi.service.mapper.ExtratoDetalhadoMapper;
 import jk.bsi.tcc.safi.service.mapper.InformacaoBancariaMapper;
@@ -44,6 +46,13 @@ public class InformacaoBancariaService {
 
     InformacaoBancariaId id = informacaoBancaria.getId();
     id.setUsuarioId(usuario.getId());
+
+    Date mesAno = id.getMesAno();
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(mesAno);
+    calendar.set(Calendar.DAY_OF_MONTH,1);
+
+    id.setMesAno(calendar.getTime());
     informacaoBancaria.setId(id);
     informacaoBancaria.setUsuario(usuario);
 
@@ -82,14 +91,27 @@ public class InformacaoBancariaService {
     return informacaoBancariaMapper.toDto(informacaoBancaria);
   }
 
-  public Page<InformacaoBancariaDto> findAll(Pageable pageable) {
+  public List<InformacaoBancariaDto> findAll(Pageable pageable) {
+    List<InformacaoBancariaDto> listaInfoDto = new ArrayList<>();
     final String email = activeUserService.getEmail();
 
-    Page<InformacaoBancariaDto> informacoesBancariasDto =
-      informacaoBancariaRepository.findByUsuarioEmail(email, pageable)
-        .map(informacaoBancariaMapper::toDto);
 
-    return informacoesBancariasDto;
+    Page<InformacaoBancaria> pageInfo = informacaoBancariaRepository.findByUsuarioEmail(email, pageable);
+
+    pageInfo.getContent().forEach( (info) -> {
+      InformacaoBancariaDto informacaoBancariaDto = new InformacaoBancariaDto();
+
+      InformacaoBancariaIdDto id = new InformacaoBancariaIdDto();
+      id.setMesAno(info.getId().getMesAno());
+      id.setTpBanco(info.getId().getTpBanco());
+      informacaoBancariaDto.setId(id);
+
+      informacaoBancariaDto.setDataInclusao(info.getDataInclusao());
+
+      listaInfoDto.add(informacaoBancariaDto);
+    } );
+
+    return listaInfoDto;
   }
 
   private ExtratoDetalhado normalizeExtratoBancario(ExtratoDetalhadoDto dto){

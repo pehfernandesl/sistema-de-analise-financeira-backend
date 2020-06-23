@@ -1,11 +1,17 @@
 package jk.bsi.tcc.safi.service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import jk.bsi.tcc.safi.domain.InformacaoBancaria;
+import jk.bsi.tcc.safi.repository.InformacaoBancariaRepository;
 import jk.bsi.tcc.safi.service.dto.RelatorioDto;
 import jk.bsi.tcc.safi.service.dto.RelatorioOperacoesDto;
 import jk.bsi.tcc.safi.service.util.CoreUtil;
@@ -22,10 +28,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RelatorioService {
   private final RelatorioRepository relatorioRepository;
+  private final InformacaoBancariaRepository informacaoBancariaRepository;
   private final ActiveUserService activeUserService;
 
-  public RelatorioDto preencherRelatorio(Long mes) throws RuntimeException {
-    final List<Long> ids = Arrays.asList(1L, 213L);
+  public RelatorioDto preencherRelatorio(LocalDate mes) throws RuntimeException {
+    List<InformacaoBancaria> listaInfo = informacaoBancariaRepository.findById_MesAno(Date.from(mes.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+    final List<Long> ids = new ArrayList<>();
+    listaInfo.forEach((info) -> {
+      ids.add(info.getExtratoDetalhado().getId());
+    });
+
 
     final RelatorioDto relatorioDto =
       this.relatorioRepository.buscarDadosGerais(ids);

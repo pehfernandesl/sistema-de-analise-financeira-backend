@@ -7,6 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Spring Data repository for the {@link InformacaoBancaria} entity.
  */
@@ -14,4 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface InformacaoBancariaRepository
   extends JpaRepository<InformacaoBancaria, InformacaoBancariaId> {
   Page<InformacaoBancaria> findByUsuarioEmail(String email, Pageable pageable);
+
+  List<InformacaoBancaria> findById_MesAno(Date mesAno);
 }

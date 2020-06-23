@@ -3,6 +3,7 @@ package jk.bsi.tcc.safi.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +18,6 @@ import lombok.*;
 /**
  * Transacao entity.
  */
-@NoArgsConstructor
-@Setter
-@Getter
-@EqualsAndHashCode
 @Entity
 @Table(name = "transacao")
 public class Transacao implements Serializable {
@@ -40,5 +37,61 @@ public class Transacao implements Serializable {
   @ManyToOne
   @JoinColumn(name = "extrato_id")
   private ExtratoDetalhado extratoDetalhado;
+
+  public Transacao() {
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Date getData() {
+    return data;
+  }
+
+  public void setData(Date data) {
+    this.data = data;
+  }
+
+  public Long getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(Long tipo) {
+    this.tipo = tipo;
+  }
+
+  public Double getValor() {
+    return valor;
+  }
+
+  public void setValor(Double valor) {
+    this.valor = valor;
+  }
+
+  public ExtratoDetalhado getExtratoDetalhado() {
+    return extratoDetalhado;
+  }
+
+  public void setExtratoDetalhado(ExtratoDetalhado extratoDetalhado) {
+    this.extratoDetalhado = extratoDetalhado;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Transacao transacao = (Transacao) o;
+    return Objects.equals(id, transacao.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }
 
